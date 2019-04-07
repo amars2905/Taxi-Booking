@@ -51,8 +51,8 @@ public class Constant {
     public static final String Email = "Email";
     public static final String CategeryId = "CategeryId";
     public static final String AboutFragment = "About";
-    public static final String ProductsFragment = "ProductDetail Category" ;
-    public static final String SubCategoryFragment = "SubCategory" ;
+    public static final String ProductsFragment = "ProductDetail Category";
+    public static final String SubCategoryFragment = "SubCategory";
     public static final String ProductDetailFragment = "ProductDetail Detail";
     public static final String OrderHistoryFragment = "Order History";
     public static final String PaymentMethord = "PaymentMethord";
@@ -74,4 +74,7 @@ public class Constant {
     public static final String ProductImage = "ProductImage";
     public static final String DEVICE_TOKEN = "token";
 
+    public static final String ProfileFragment = "Profile";
+    public static final String FeedBackFragment = "Feedback";
+    public static final String RideHistoryFragment = "Ride History";
 }

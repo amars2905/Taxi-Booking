@@ -283,8 +283,8 @@
     <color name="grey_700">#616161</color>
     <color name="grey_800">#424242</color>
     <color name="grey_900">#212121</color>
-
-    <color name="transparent">#004D4D4D</color>
+SS
+    <color name="transparent">#DC4D4D4D</color>
     <color name="transparent_b">#655C5C5C</color>
     <color name="transparent_a">#ADAFA9A9</color>
 </resources>

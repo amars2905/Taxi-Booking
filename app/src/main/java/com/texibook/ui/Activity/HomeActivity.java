@@ -3,6 +3,9 @@ package com.texibook.ui.Activity;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -14,15 +17,26 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.texibook.R;
+import com.texibook.constant.Constant;
+import com.texibook.ui.fragment.FeedBackFragment;
+import com.texibook.ui.fragment.HomeFragment;
+import com.texibook.ui.fragment.ProfileFragment;
+import com.texibook.ui.fragment.RideHistoryFragment;
+import com.texibook.utils.BaseActivity;
+import com.texibook.utils.FragmentUtils;
 
-public class HomeActivity extends AppCompatActivity
+public class HomeActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+    private FragmentUtils fragmentUtils;
+    public static FragmentManager fragmentManager;
+    public static Toolbar toolbar;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -33,6 +47,10 @@ public class HomeActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        fragmentManager = getSupportFragmentManager();
+        fragmentUtils = new FragmentUtils(fragmentManager);
+        fragmentUtils.replaceFragment(new HomeFragment(), Constant.HomeFragment, R.id.frameLayout);
     }
 
     @Override
@@ -70,14 +88,16 @@ public class HomeActivity extends AppCompatActivity
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
         int id = item.getItemId();
-
         if (id == R.id.home) {
-            // Handle the camera action
+            toolbar.setTitle(Constant.HomeFragment);
+            fragmentUtils.replaceFragment(new HomeFragment(), Constant.HomeFragment, R.id.frameLayout);
         } else if (id == R.id.profile) {
-
+            toolbar.setTitle(Constant.ProfileFragment);
+            fragmentUtils.replaceFragment(new ProfileFragment(), Constant.ProfileFragment, R.id.frameLayout);
         } else if (id == R.id.your_rides) {
+            toolbar.setTitle(Constant.RideHistoryFragment);
+            fragmentUtils.replaceFragment(new RideHistoryFragment(), Constant.RideHistoryFragment, R.id.frameLayout);
 
         } else if (id == R.id.free_rides) {
 
@@ -85,16 +105,18 @@ public class HomeActivity extends AppCompatActivity
 
         } else if (id == R.id.notification) {
 
-        }else if (id == R.id.notification) {
-
         } else if (id == R.id.get_help) {
 
-        }else if (id == R.id.feedback) {
-
+        } else if (id == R.id.feedback) {
+            toolbar.setTitle(Constant.FeedBackFragment);
+            fragmentUtils.replaceFragment(new FeedBackFragment(), Constant.FeedBackFragment, R.id.frameLayout);
+            return true;
         }
+
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
 }

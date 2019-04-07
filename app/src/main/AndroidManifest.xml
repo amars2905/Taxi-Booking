@@ -12,7 +12,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.Activity.FindDriverActivity"></activity>
+        <activity android:name=".ui.Activity.ActivityYourRides"></activity>
+        <activity android:name=".ui.Activity.ProfileActivity" />
+        <activity android:name=".ui.Activity.FindDriverActivity" />
         <activity
             android:name=".ui.Activity.HomeActivity"
             android:label="@string/title_activity_home"
