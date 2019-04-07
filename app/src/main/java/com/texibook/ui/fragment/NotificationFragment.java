@@ -13,7 +13,7 @@ import com.texibook.R;
 import com.texibook.adapters.FragmentPagerAdapter;
 import com.texibook.utils.BaseFragment;
 
-public class YourRidesFragment extends BaseFragment {
+public class NotificationFragment extends BaseFragment {
     private View rootView;
     private FragmentPagerAdapter adapter;
     private TabLayout tabLayout;
@@ -22,17 +22,17 @@ public class YourRidesFragment extends BaseFragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        rootView = inflater.inflate(R.layout.fragment_your_rides, container, false);
+        rootView = inflater.inflate(R.layout.fragment_notification, container, false);
         init();
         return rootView;
     }
 
     private void init() {
-        viewPager = (ViewPager) rootView.findViewById(R.id.vpYourRides);
-        tabLayout = (TabLayout) rootView.findViewById(R.id.tlYourRides);
+        viewPager = (ViewPager) rootView.findViewById(R.id.vpNotification);
+        tabLayout = (TabLayout) rootView.findViewById(R.id.tlNotification);
         adapter = new FragmentPagerAdapter(getFragmentManager());
-        adapter.addFragment(new RideHistoryFragment(), "Current Ride");
-        adapter.addFragment(new RideHistoryFragment(), "Ride History");
+        adapter.addFragment(new RecentNotificationFragment(), "Recent Notification");
+        adapter.addFragment(new AllNotificationFragment(), "All Notification");
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
     }

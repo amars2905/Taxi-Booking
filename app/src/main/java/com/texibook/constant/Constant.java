@@ -78,4 +78,6 @@ public class Constant {
     public static final String FeedBackFragment = "Feedback";
     public static final String RideHistoryFragment = "Ride History";
     public static final String YourRidesFragment = "Your Rides";
+    public static final String NotificationFragment = "Notification";
+    public static final String ReferNEarnFragment = "Refer and Earn";
 }

@@ -8,11 +8,11 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class YourRidesFragmentAdapter extends FragmentStatePagerAdapter {
+public class FragmentPagerAdapter extends FragmentStatePagerAdapter {
     private final List<Fragment> mFragmentList = new ArrayList<>();
     private final List<String> mFragmentTitleList = new ArrayList<>();
 
-    public YourRidesFragmentAdapter(FragmentManager fm) {
+    public FragmentPagerAdapter(FragmentManager fm) {
         super(fm);
     }
 

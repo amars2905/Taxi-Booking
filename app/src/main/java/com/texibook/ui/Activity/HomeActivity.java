@@ -20,7 +20,9 @@ import com.texibook.R;
 import com.texibook.constant.Constant;
 import com.texibook.ui.fragment.FeedBackFragment;
 import com.texibook.ui.fragment.HomeFragment;
+import com.texibook.ui.fragment.NotificationFragment;
 import com.texibook.ui.fragment.ProfileFragment;
+import com.texibook.ui.fragment.ReferNEarnFragment;
 import com.texibook.ui.fragment.RideHistoryFragment;
 import com.texibook.ui.fragment.YourRidesFragment;
 import com.texibook.utils.BaseActivity;
@@ -101,10 +103,13 @@ public class HomeActivity extends BaseActivity
             fragmentUtils.replaceFragment(new YourRidesFragment(), Constant.YourRidesFragment, R.id.frameLayout);
 
         } else if (id == R.id.free_rides) {
-
+            toolbar.setTitle(Constant.ReferNEarnFragment);
+            fragmentUtils.replaceFragment(new ReferNEarnFragment(), Constant.ReferNEarnFragment, R.id.frameLayout);
         } else if (id == R.id.setting) {
 
         } else if (id == R.id.notification) {
+            toolbar.setTitle(Constant.NotificationFragment);
+            fragmentUtils.replaceFragment(new NotificationFragment(), Constant.NotificationFragment, R.id.frameLayout);
 
         } else if (id == R.id.get_help) {
 
