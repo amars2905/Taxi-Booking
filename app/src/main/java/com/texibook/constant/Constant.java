@@ -77,4 +77,5 @@ public class Constant {
     public static final String ProfileFragment = "Profile";
     public static final String FeedBackFragment = "Feedback";
     public static final String RideHistoryFragment = "Ride History";
+    public static final String YourRidesFragment = "Your Rides";
 }

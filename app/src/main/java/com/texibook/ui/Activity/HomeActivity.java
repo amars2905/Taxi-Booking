@@ -22,6 +22,7 @@ import com.texibook.ui.fragment.FeedBackFragment;
 import com.texibook.ui.fragment.HomeFragment;
 import com.texibook.ui.fragment.ProfileFragment;
 import com.texibook.ui.fragment.RideHistoryFragment;
+import com.texibook.ui.fragment.YourRidesFragment;
 import com.texibook.utils.BaseActivity;
 import com.texibook.utils.FragmentUtils;
 
@@ -96,8 +97,8 @@ public class HomeActivity extends BaseActivity
             toolbar.setTitle(Constant.ProfileFragment);
             fragmentUtils.replaceFragment(new ProfileFragment(), Constant.ProfileFragment, R.id.frameLayout);
         } else if (id == R.id.your_rides) {
-            toolbar.setTitle(Constant.RideHistoryFragment);
-            fragmentUtils.replaceFragment(new RideHistoryFragment(), Constant.RideHistoryFragment, R.id.frameLayout);
+            toolbar.setTitle(Constant.YourRidesFragment);
+            fragmentUtils.replaceFragment(new YourRidesFragment(), Constant.YourRidesFragment, R.id.frameLayout);
 
         } else if (id == R.id.free_rides) {
 
