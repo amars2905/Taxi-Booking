@@ -13,7 +13,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.texibook.ui.Activity.HomeActivity;
-import com.texibook.ui.Activity.MainActivity;
 import com.texibook.R;
 import com.texibook.constant.Constant;
 import com.texibook.retrofit_provider.RetrofitService;

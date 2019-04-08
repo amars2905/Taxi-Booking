@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v4.app.ActivityCompat;
 
-import com.texibook.ui.Activity.MainActivity;
 import com.texibook.ui.Activity.LoginActivity;
 
 
@@ -60,7 +59,7 @@ public class SessionManager {
         editor.commit();
     }
 
-    public void checkLogin() {
+   /* public void checkLogin() {
         if (!this.isLoggedIn()) {
             Intent i = new Intent(ctx, MainActivity.class);
             i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -77,7 +76,7 @@ public class SessionManager {
         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         ctx.startActivity(i);
-    }
+    }*/
 
     public boolean isLoggedIn() {
         return pref.getBoolean(IS_LOGIN, false);
