@@ -4,6 +4,7 @@
 
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
         android:allowBackup="true"
@@ -15,6 +16,10 @@
         <activity android:name=".ui.Activity.ActivityYourRides"></activity>
         <activity android:name=".ui.Activity.ProfileActivity" />
         <activity android:name=".ui.Activity.FindDriverActivity" />
+        <activity android:name=".ui.Activity.SignInActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
+        <activity android:name=".ui.Activity.VerifyOtpActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
         <activity
             android:name=".ui.Activity.HomeActivity"
             android:label="@string/title_activity_home"

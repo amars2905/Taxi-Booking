@@ -5,6 +5,7 @@ import com.texibook.constant.Constant;
 import com.texibook.model.address_add_responce.AddAddressModel;
 import com.texibook.model.login_responce.LoginModel;
 import com.texibook.model.order_responce.OrderModel;
+import com.texibook.model.otp_responce.OtpModel;
 import com.texibook.model.productdetail_responce.ProductDetailModel;
 import com.texibook.model.productlist_responce.ProductListModel;
 import com.texibook.model.signup_responce.SignUpModel;
@@ -26,14 +27,6 @@ public interface RetrofitApiClient {
     Call<ProductListModel> productData();
 
 
-
-    @FormUrlEncoded
-    @POST(Constant.SIGNUP_API)
-    Call<SignUpModel> signUp(@Field("name") String name,
-                             @Field("email") String email,
-                             @Field("contact") String contact,
-                             @Field("password") String password);
-
     @FormUrlEncoded
     @POST(Constant.SUPPORT)
     Call<SignUpModel> updateToken(@Field("user_id") String user_id,
@@ -50,13 +43,12 @@ public interface RetrofitApiClient {
 
     @FormUrlEncoded
     @POST(Constant.OTP_API)
-    Call<LoginModel> otpApi(@Field("contact") String contact,
-                            @Field("otp_number") String otp_number);
+    Call<OtpModel> otpApi(@Field("mobileNumber") String mobileNumber,
+                          @Field("otp") String otp);
 
     @FormUrlEncoded
     @POST(Constant.LOGIN_API)
-    Call<LoginModel> loginData(@Field("username") String email,
-                               @Field("password") String password);
+    Call<LoginModel> loginData(@Field("mobileNumber") String mobileNumber);
 
 
     @FormUrlEncoded

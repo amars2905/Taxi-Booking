@@ -5,6 +5,7 @@ import android.app.Dialog;
 
 import com.texibook.constant.Constant;
 import com.texibook.model.login_responce.LoginModel;
+import com.texibook.model.otp_responce.OtpModel;
 import com.texibook.utils.AppProgressDialog;
 
 import retrofit2.Call;
@@ -61,6 +62,27 @@ public class RetrofitService {
                 webResponse.onResponseFailed(throwable.getMessage());
             }
         });
+
+    }
+        public static void getOtpData(final Dialog dialog, final Call<OtpModel> method, final WebResponse webResponse) {
+            if (dialog != null)
+                AppProgressDialog.show(dialog);
+
+            method.enqueue(new Callback<OtpModel>() {
+                @Override
+                public void onResponse(Call<OtpModel> call, Response<OtpModel> response) {
+                    if (dialog != null)
+                        AppProgressDialog.hide(dialog);
+                    WebServiceResponse.handleResponse(response, webResponse);
+                }
+
+                @Override
+                public void onFailure(Call<OtpModel> call, Throwable throwable) {
+                    if (dialog != null)
+                        AppProgressDialog.hide(dialog);
+                    webResponse.onResponseFailed(throwable.getMessage());
+                }
+            });
     }
 
 

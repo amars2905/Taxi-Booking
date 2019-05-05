@@ -23,11 +23,11 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
     private View rootView;
     private LinearLayout btn_truck, btn_bus_rentls, btn_out_ride_booking, btn_daily_raids, btn_rentls;
 
-    private String[] dailyrideList = new String[] {"Auto", "van", "Hatchback", "Sedan", "SUV", "Pool "};
+    private String[] dailyrideList = new String[] {"Auto", "van", "Hatchback", "Sedan", "SUV"};
     private String[] outstationList = new String[] {"Hatchback", "Sedan", "SUV", "Van", "Tempo Traveller", "Luxury Class"};
     private String[] reantalsList = new String[] {"Hatchback", "Sedan", "SUV", "Van", "Tempo Traveller", "Luxury Class"};
     private String[] busrentalList = new String[] {"A/C Passenger Bus", "A/C Tour Bus", "non A/C Passenger Bus", "Non A/C Tour Bus"};
-    private String[] truckList = new String[] {"Fully Truck", "Paitial Truck", "Loading Truck"};
+    private String[] truckList = new String[] {"Fully Truck", "Paitial Truck", "Loading Auto"};
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

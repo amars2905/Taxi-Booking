@@ -1,29 +1,30 @@
 
 package com.texibook.model.login_responce;
 
+
 import android.os.Parcel;
 import android.os.Parcelable;
-
+import android.os.Parcelable.Creator;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class LoginModel implements Parcelable
 {
 
-    @SerializedName("error")
+    @SerializedName("status")
     @Expose
-    private Boolean error;
+    private Integer status;
     @SerializedName("message")
     @Expose
     private String message;
-    @SerializedName("user")
+    @SerializedName("otp")
     @Expose
-    private User user;
-    public final static Creator<LoginModel> CREATOR = new Creator<LoginModel>() {
+    private String otp;
+    public final static Parcelable.Creator<LoginModel> CREATOR = new Creator<LoginModel>() {
 
 
         @SuppressWarnings({
-            "unchecked"
+                "unchecked"
         })
         public LoginModel createFromParcel(Parcel in) {
             return new LoginModel(in);
@@ -34,27 +35,27 @@ public class LoginModel implements Parcelable
         }
 
     }
-    ;
+            ;
 
     protected LoginModel(Parcel in) {
-        this.error = ((Boolean) in.readValue((Boolean.class.getClassLoader())));
+        this.status = ((Integer) in.readValue((Integer.class.getClassLoader())));
         this.message = ((String) in.readValue((String.class.getClassLoader())));
-        this.user = ((User) in.readValue((User.class.getClassLoader())));
+        this.otp = ((String) in.readValue((String.class.getClassLoader())));
     }
 
     public LoginModel() {
     }
 
-    public Boolean getError() {
-        return error;
+    public Integer getStatus() {
+        return status;
     }
 
-    public void setError(Boolean error) {
-        this.error = error;
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 
-    public LoginModel withError(Boolean error) {
-        this.error = error;
+    public LoginModel withStatus(Integer status) {
+        this.status = status;
         return this;
     }
 
@@ -71,27 +72,27 @@ public class LoginModel implements Parcelable
         return this;
     }
 
-    public User getUser() {
-        return user;
+    public String getOtp() {
+        return otp;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setOtp(String otp) {
+        this.otp = otp;
     }
 
-    public LoginModel withUser(User user) {
-        this.user = user;
+    public LoginModel withOtp(String otp) {
+        this.otp = otp;
         return this;
     }
 
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeValue(error);
+        dest.writeValue(status);
         dest.writeValue(message);
-        dest.writeValue(user);
+        dest.writeValue(otp);
     }
 
     public int describeContents() {
-        return  0;
+        return 0;
     }
 
 }

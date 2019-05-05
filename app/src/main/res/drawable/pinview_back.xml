@@ -9,14 +9,14 @@
     <item android:state_enabled="true" android:state_focused="true">
         <shape android:padding="10dp" android:shape="rectangle">
             <stroke android:width="0.5dp" android:color="@color/red_a" />
-            <solid android:color="@color/transparent" />
+            <solid android:color="@color/white" />
             <corners android:radius="4dp" />
         </shape>
     </item>
     <item>
         <shape android:padding="10dp" android:shape="rectangle">
             <stroke android:width="0.5dp" android:color="@color/red_a" />
-            <solid android:color="@color/transparent" />
+            <solid android:color="@color/white" />
             <corners android:radius="4dp" />
         </shape>
     </item>
