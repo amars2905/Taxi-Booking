@@ -2,9 +2,13 @@ package com.texibook.ui.fragment;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.BottomSheetBehavior;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,98 +19,156 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.texibook.R;
+import com.texibook.adapters.MainCategoryAdapter;
+import com.texibook.adapters.RideHistoryAdapter;
+import com.texibook.adapters.SubCategoryAdapter;
+import com.texibook.constant.Constant;
+import com.texibook.model.User;
+import com.texibook.model.main_category_modal.Subcategory;
+import com.texibook.model.main_category_modal.TaxiMainCategoryModal;
+import com.texibook.model.main_category_modal.Vehicle;
+import com.texibook.model.otp_responce.OtpModel;
+import com.texibook.retrofit_provider.RetrofitService;
+import com.texibook.retrofit_provider.WebResponse;
+import com.texibook.ui.Activity.HomeActivity;
+import com.texibook.utils.Alerts;
+import com.texibook.utils.AppPreference;
 import com.texibook.utils.BaseFragment;
+import com.texibook.utils.ConnectionDirector;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import retrofit2.Response;
 
 public class HomeFragment extends BaseFragment implements View.OnClickListener {
     private View rootView;
-    private LinearLayout btn_truck, btn_bus_rentls, btn_out_ride_booking, btn_daily_raids, btn_rentls;
+    private ConnectionDirector cd;
+    private List<Vehicle> categoryList = new ArrayList<>();
+    private List<Subcategory> subCategoryList = new ArrayList<>();
+    private MainCategoryAdapter categoryAdapter;
+    private SubCategoryAdapter subCategoryAdapter;
+    LinearLayout layoutBottomSheet;
+    private BottomSheetBehavior sheetBehavior;
+    private TaxiMainCategoryModal mainCategoryModal;
 
-    private String[] dailyrideList = new String[] {"Auto", "van", "Hatchback", "Sedan", "SUV"};
-    private String[] outstationList = new String[] {"Hatchback", "Sedan", "SUV", "Van", "Tempo Traveller", "Luxury Class"};
-    private String[] reantalsList = new String[] {"Hatchback", "Sedan", "SUV", "Van", "Tempo Traveller", "Luxury Class"};
-    private String[] busrentalList = new String[] {"A/C Passenger Bus", "A/C Tour Bus", "non A/C Passenger Bus", "Non A/C Tour Bus"};
-    private String[] truckList = new String[] {"Fully Truck", "Paitial Truck", "Loading Auto"};
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.content_home, container, false);
+        activity = getActivity();
+        mContext = getActivity();
+        cd = new ConnectionDirector(mContext);
+        retrofitApiClient = RetrofitService.getRetrofit();
+        categoryApi();
+
         init();
         return rootView;
     }
 
     private void init() {
-        btn_daily_raids = rootView.findViewById(R.id.btn_daily_raids);
-        btn_out_ride_booking = rootView.findViewById(R.id.btn_out_ride_booking);
-        btn_bus_rentls = rootView.findViewById(R.id.btn_bus_rentls);
-        btn_truck = rootView.findViewById(R.id.btn_truck);
-        btn_rentls = rootView.findViewById(R.id.btn_rentls);
+       /* View layoutBottomSheet = (View) rootView.findViewById(R.id.nestedScrollView);
+        sheetBehavior = BottomSheetBehavior.from(layoutBottomSheet);
+        sheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
+            @Override
+            public void onStateChanged(@NonNull View view, int i) {
+                switch (i) {
+                    case BottomSheetBehavior.STATE_HIDDEN:
+                        break;
+                    case BottomSheetBehavior.STATE_EXPANDED:
+                        break;
+                    case BottomSheetBehavior.STATE_COLLAPSED:
+                        break;
+                    case BottomSheetBehavior.STATE_DRAGGING:
+                        break;
+                    case BottomSheetBehavior.STATE_SETTLING:
+                        break;
+                }
+            }
 
-        btn_truck.setOnClickListener(this);
-        btn_bus_rentls.setOnClickListener(this);
-        btn_out_ride_booking.setOnClickListener(this);
-        btn_daily_raids.setOnClickListener(this);
-        btn_rentls.setOnClickListener(this);
+            @Override
+            public void onSlide(@NonNull View view, float v) {
+
+            }
+        });*/
+
+        RecyclerView rvCategory = rootView.findViewById(R.id.rvCategory);
+        RecyclerView rvSubcategory = rootView.findViewById(R.id.rvSubcategory);
+        rvCategory.setHasFixedSize(true);
+
+        rvCategory.setLayoutManager(new LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false));
+        categoryAdapter = new MainCategoryAdapter(categoryList, mContext, this);
+        rvCategory.setAdapter(categoryAdapter);
+        categoryAdapter.notifyDataSetChanged();
+
+        rvSubcategory.setHasFixedSize(true);
+
+        rvSubcategory.setLayoutManager(new LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false));
+        subCategoryAdapter = new SubCategoryAdapter(subCategoryList, mContext, this);
+        rvSubcategory.setAdapter(subCategoryAdapter);
+        subCategoryAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        categoryApi();
+    }
+
+    private void firstCategory(List<Subcategory> arrayList) {
+        subCategoryList.clear();
+        subCategoryList.addAll(arrayList);
+        subCategoryAdapter.notifyDataSetChanged();
     }
 
     @Override
     public void onClick(View view) {
-        switch (view.getId())
-        {
-            case R.id.btn_bus_rentls :
-                showDialog(getActivity(), "Bus", busrentalList);
-                break;
-            case R.id.btn_out_ride_booking :
-                showDialog(getActivity(), "OutStation Booking", outstationList);
-
-                break;
-            case R.id.btn_daily_raids :
-                showDialog(getActivity(), "Daily Ride", dailyrideList);
-
-                break;
-
-            case R.id.btn_truck :
-                showDialog(getActivity(), "Truck", truckList);
-
-                break;
-
-            case R.id.btn_rentls :
-                showDialog(getActivity(), "Rentals", reantalsList);
-
+        switch (view.getId()) {
+            case R.id.llCategory:
+                subCategoryList.clear();
+                int pos = (int) view.getTag();
+                subCategoryList.addAll(mainCategoryModal.getVehicle().get(pos).getSubcategory());
+                subCategoryAdapter.notifyDataSetChanged();
                 break;
         }
     }
 
-    public void showDialog(Activity activity, String msg, String[] list){
-        final Dialog dialog = new Dialog(activity);
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setCancelable(true);
-        dialog.setContentView(R.layout.dialogbox_categary);
+    private void categoryApi() {
+        if (cd.isNetWorkAvailable()) {
+            RetrofitService.getCategoryData(new Dialog(mContext), retrofitApiClient.mainCategoryData(), new WebResponse() {
+                @Override
+                public void onResponseSuccess(Response<?> result) {
+                    categoryList.clear();
+                    mainCategoryModal = (TaxiMainCategoryModal) result.body();
 
-        TextView text = (TextView) dialog.findViewById(R.id.tv_category_name);
-        text.setText(msg);
+                    if (mainCategoryModal.getStatus() == 1) {
+                        categoryList.addAll(mainCategoryModal.getVehicle());
+                        if (categoryList.size() > 0) {
+                            TextView categoryName = (TextView) rootView.findViewById(R.id.tvCategoryName);
+                            categoryName.setVisibility(View.VISIBLE);
+                            categoryName.setText(categoryList.get(0).getName() + " : Subcategories");
+                            firstCategory(categoryList.get(0).getSubcategory());
+                            categoryAdapter.notifyDataSetChanged();
+                        } else {
+                            Alerts.show(mContext, mainCategoryModal.getMessage());
+                        }
+                    }
+                }
 
-        ListView category_list = (ListView) dialog.findViewById(R.id.category_list);
-
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),R.layout.custom_list, R.id.tv_item_name, list);
-
-        category_list.setAdapter(adapter);
-
-        category_list.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                dialog.dismiss();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
-
-        dialog.show();
-
+                @Override
+                public void onResponseFailed(String error) {
+                    Alerts.show(mContext, error);
+                }
+            });
+        } else {
+            cd.show(mContext);
+        }
     }
+
 
 }

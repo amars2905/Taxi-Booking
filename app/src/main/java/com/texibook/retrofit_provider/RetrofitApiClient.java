@@ -4,6 +4,7 @@ package com.texibook.retrofit_provider;
 import com.texibook.constant.Constant;
 import com.texibook.model.address_add_responce.AddAddressModel;
 import com.texibook.model.login_responce.LoginModel;
+import com.texibook.model.main_category_modal.TaxiMainCategoryModal;
 import com.texibook.model.order_responce.OrderModel;
 import com.texibook.model.otp_responce.OtpModel;
 import com.texibook.model.productdetail_responce.ProductDetailModel;
@@ -22,10 +23,8 @@ import retrofit2.http.POST;
 import retrofit2.http.Part;
 
 public interface RetrofitApiClient {
-
-    @GET(Constant.PRODUCTS_API)
-    Call<ProductListModel> productData();
-
+    @GET(Constant.MAIN_CATEGORY_API)
+    Call<TaxiMainCategoryModal> mainCategoryData();
 
     @FormUrlEncoded
     @POST(Constant.SUPPORT)
@@ -56,7 +55,6 @@ public interface RetrofitApiClient {
     Call<ResponseBody> contactUs(@Field("name") String name, @Field("email") String email,
                                  @Field("mobile_no") String mobile_no, @Field("subject") String subject
             , @Field("message") String message);
-
 
 
     @FormUrlEncoded
@@ -108,9 +106,6 @@ public interface RetrofitApiClient {
             @Field("user_id") String user_id);
 
 
-
-
-
     @FormUrlEncoded
     @POST(Constant.ORDER)
     Call<OrderModel> setOrder(
@@ -130,8 +125,6 @@ public interface RetrofitApiClient {
             @Field("user_zipcode") String user_zipcode,
             @Field("order_note") String order_note,
             @Field("product_details") String product_details);
-
-
 
 
 }

@@ -4,7 +4,7 @@ public class Constant {
     public static final String BASE_URL = "http://www.damodarvanshiya.com";
     public static final String LOGIN_API = "/texi_booking/Api/login";
     public static final String OTP_API = "/texi_booking/Api/otpVerification";
-    public static final String PRODUCTS_API = "api/select-product.php";
+    public static final String MAIN_CATEGORY_API = "/texi_booking/Api/vehicles";
     public static final String PRODUCTS_DETAIL_API = "api/select-product-details.php";
     public static final String GALLERY_API = "kls-api/gallery.php";
     public static final String CONTACT_US = "kls-api/contact.php";
