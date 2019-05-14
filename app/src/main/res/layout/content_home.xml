@@ -1,171 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    >
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:src="@drawable/map"
-        android:adjustViewBounds="true"
-        android:layout_above="@id/hsv"
-        android:scaleType="fitXY"/>
-
-    <HorizontalScrollView
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:id="@+id/hsv">
+        android:layout_gravity="bottom">
 
-        <LinearLayout
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:adjustViewBounds="true"
+            android:scaleType="fitXY"
+            android:src="@drawable/map" />
+        <TextView
+            android:layout_marginBottom="-16dp"
+            android:visibility="gone"
+            android:padding="8dp"
+            android:background="@color/yellow_900"
+            android:layout_above="@+id/rvSubcategory"
+            android:id="@+id/tvCategoryName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:orientation="horizontal">
+            android:textColor="@color/white"
+            android:textSize="16sp" />
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="4dp"
-                android:orientation="vertical"
-                android:padding="4sp"
-                android:id="@+id/btn_daily_raids">
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rvSubcategory"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/rvCategory" />
 
-                <ImageView
-                    android:layout_width="60sp"
-                    android:layout_height="60sp"
-                    android:layout_gravity="center"
-                    android:src="@drawable/img_hatchback" />
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rvCategory"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true" />
+    </RelativeLayout>
+    <!--
+        <android.support.design.widget.CoordinatorLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="80dp">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:padding="2dp"
-                    android:gravity="center"
-                    android:text="Daily \nRides"
-                    android:textColor="@color/black"
-                    android:textSize="14sp"
-                    android:textStyle="bold" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="4dp"
-                android:orientation="vertical"
-                android:padding="4sp"
-                android:id="@+id/btn_out_ride_booking">
-
-                <ImageView
-                    android:layout_width="60sp"
-                    android:layout_height="60sp"
-                    android:layout_gravity="center"
-                    android:src="@drawable/img_sedan"
-                    />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:padding="2dp"
-                    android:text="Out Station \nBooking"
-                    android:textColor="@color/black"
-                    android:gravity="center"
-                    android:textSize="14sp"
-                    android:textStyle="bold" />
-            </LinearLayout>
-
-
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="4dp"
-                android:orientation="vertical"
-                android:padding="4sp"
-                android:id="@+id/btn_rentls">
-
-                <ImageView
-                    android:layout_width="60sp"
-                    android:layout_height="60sp"
-                    android:layout_gravity="center"
-                    android:src="@drawable/img_sedan"
-                    />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:padding="2dp"
-                    android:text="Renatls"
-                    android:textColor="@color/black"
-                    android:textSize="14sp"
-                    android:textStyle="bold" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="4dp"
-                android:orientation="vertical"
-                android:padding="4sp"
-                android:id="@+id/btn_bus_rentls">
-
-                <ImageView
-                    android:layout_width="60sp"
-                    android:layout_height="60sp"
-                    android:layout_gravity="center"
-                    android:src="@drawable/bus_white" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:padding="2dp"
-                    android:text="Bus"
-                    android:textColor="@color/black"
-                    android:textSize="14sp"
-                    android:textStyle="bold" />
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="4dp"
-                android:orientation="vertical"
-                android:padding="4sp"
-                android:id="@+id/btn_truck">
-
-                <ImageView
-                    android:layout_width="60sp"
-                    android:layout_height="60sp"
-                    android:layout_gravity="center"
-                    android:src="@drawable/img_truck"
-                    />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:padding="2dp"
-                    android:text="Truck"
-                    android:textColor="@color/black"
-                    android:textSize="14sp"
-                    android:textStyle="bold" />
-            </LinearLayout>
-
-
-
-        </LinearLayout>
-
-    </HorizontalScrollView>
+            <android.support.v4.widget.NestedScrollView
+                android:id="@+id/nestedScrollView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="80dp"
+                android:background="@android:color/holo_green_light"
+                android:clipToPadding="true"
+                android:minHeight="200dp"
+                app:behavior_hideable="false"
+                app:behavior_peekHeight="200dp"
+                app:layout_behavior="@string/bottom_sheet_behavior">-->
 
 </RelativeLayout>

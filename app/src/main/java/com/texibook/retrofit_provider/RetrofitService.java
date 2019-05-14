@@ -5,6 +5,7 @@ import android.app.Dialog;
 
 import com.texibook.constant.Constant;
 import com.texibook.model.login_responce.LoginModel;
+import com.texibook.model.main_category_modal.TaxiMainCategoryModal;
 import com.texibook.model.otp_responce.OtpModel;
 import com.texibook.utils.AppProgressDialog;
 
@@ -42,6 +43,28 @@ public class RetrofitService {
             new RetrofitService();
         return client;
     }
+    public static void getCategoryData(final Dialog dialog, final Call<TaxiMainCategoryModal> method, final WebResponse webResponse) {
+        if (dialog != null)
+            AppProgressDialog.show(dialog);
+
+        method.enqueue(new Callback<TaxiMainCategoryModal>() {
+            @Override
+            public void onResponse(Call<TaxiMainCategoryModal> call, Response<TaxiMainCategoryModal> response) {
+                if (dialog != null)
+                    AppProgressDialog.hide(dialog);
+                WebServiceResponse.handleResponse(response, webResponse);
+            }
+
+            @Override
+            public void onFailure(Call<TaxiMainCategoryModal> call, Throwable throwable) {
+                if (dialog != null)
+                    AppProgressDialog.hide(dialog);
+                webResponse.onResponseFailed(throwable.getMessage());
+            }
+        });
+
+    }
+
 
     public static void getLoginData(final Dialog dialog, final Call<LoginModel> method, final WebResponse webResponse) {
         if (dialog != null)
