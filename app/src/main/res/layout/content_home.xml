@@ -1,63 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior">
+    android:background="#efefef">
+    <include layout="@layout/content_main" />
+    <include layout="@layout/bottom_sheet_driver_detail" />
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom">
+    <!-- Adding bottom sheet after main content -->
 
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:adjustViewBounds="true"
-            android:scaleType="fitXY"
-            android:src="@drawable/map" />
-        <TextView
-            android:layout_marginBottom="-16dp"
-            android:visibility="gone"
-            android:padding="8dp"
-            android:background="@color/yellow_900"
-            android:layout_above="@+id/rvSubcategory"
-            android:id="@+id/tvCategoryName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="@color/white"
-            android:textSize="16sp" />
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/rvSubcategory"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/rvCategory" />
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/rvCategory"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true" />
-    </RelativeLayout>
-    <!--
-        <android.support.design.widget.CoordinatorLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginBottom="80dp">
-
-            <android.support.v4.widget.NestedScrollView
-                android:id="@+id/nestedScrollView"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginBottom="80dp"
-                android:background="@android:color/holo_green_light"
-                android:clipToPadding="true"
-                android:minHeight="200dp"
-                app:behavior_hideable="false"
-                app:behavior_peekHeight="200dp"
-                app:layout_behavior="@string/bottom_sheet_behavior">-->
-
-</RelativeLayout>
+</android.support.design.widget.CoordinatorLayout>

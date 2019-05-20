@@ -12,12 +12,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.LinearLayout;
-import android.widget.ListView;
+
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,8 +22,6 @@ import com.texibook.R;
 import com.texibook.adapters.MainCategoryAdapter;
 import com.texibook.adapters.RideHistoryAdapter;
 import com.texibook.adapters.SubCategoryAdapter;
-import com.texibook.constant.Constant;
-import com.texibook.model.User;
 import com.texibook.model.main_category_modal.Subcategory;
 import com.texibook.model.main_category_modal.TaxiMainCategoryModal;
 import com.texibook.model.main_category_modal.Vehicle;
@@ -53,9 +46,9 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
     private List<Subcategory> subCategoryList = new ArrayList<>();
     private MainCategoryAdapter categoryAdapter;
     private SubCategoryAdapter subCategoryAdapter;
-    LinearLayout layoutBottomSheet;
     private BottomSheetBehavior sheetBehavior;
     private TaxiMainCategoryModal mainCategoryModal;
+    private RecyclerView rvCategory, rvSubcategory;
 
     @Nullable
     @Override
@@ -72,7 +65,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
     }
 
     private void init() {
-       /* View layoutBottomSheet = (View) rootView.findViewById(R.id.nestedScrollView);
+        View layoutBottomSheet = (View) rootView.findViewById(R.id.bottom_sheet);
         sheetBehavior = BottomSheetBehavior.from(layoutBottomSheet);
         sheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
             @Override
@@ -95,10 +88,10 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
             public void onSlide(@NonNull View view, float v) {
 
             }
-        });*/
+        });
 
-        RecyclerView rvCategory = rootView.findViewById(R.id.rvCategory);
-        RecyclerView rvSubcategory = rootView.findViewById(R.id.rvSubcategory);
+        rvCategory = rootView.findViewById(R.id.rvCategory);
+        rvSubcategory = rootView.findViewById(R.id.rvSubcategory);
         rvCategory.setHasFixedSize(true);
 
         rvCategory.setLayoutManager(new LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false));
@@ -134,6 +127,19 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
                 int pos = (int) view.getTag();
                 subCategoryList.addAll(mainCategoryModal.getVehicle().get(pos).getSubcategory());
                 subCategoryAdapter.notifyDataSetChanged();
+                break;
+            case R.id.llSubCategory:
+                if (sheetBehavior.getState() != BottomSheetBehavior.STATE_EXPANDED) {
+                    sheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+                } else {
+                    ((TextView) rootView.findViewById(R.id.tvCategoryName)).setVisibility(View.VISIBLE);
+                    sheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                    rvSubcategory.setVisibility(View.VISIBLE);
+                    rvCategory.setVisibility(View.VISIBLE);
+                }
+                rvSubcategory.setVisibility(View.GONE);
+                rvCategory.setVisibility(View.GONE);
+                ((TextView) rootView.findViewById(R.id.tvCategoryName)).setVisibility(View.GONE);
                 break;
         }
     }

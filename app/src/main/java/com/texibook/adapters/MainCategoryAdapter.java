@@ -2,17 +2,22 @@ package com.texibook.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.media.Image;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.texibook.R;
+import com.texibook.constant.Constant;
 import com.texibook.model.main_category_modal.Vehicle;
 import com.texibook.ui.Activity.ActivityYourRides;
+import com.texibook.utils.Alerts;
 
 import java.util.List;
 
@@ -42,6 +47,11 @@ public class MainCategoryAdapter extends RecyclerView.Adapter<MainCategoryAdapte
         holder.tvCategroName.setTag(position);
         holder.llCategory.setOnClickListener(onClickListener);
 
+        if (vehicleData.getImage() != null) {
+            Glide.with(mContext).load(Constant.IMAGE_URL + vehicleData.getImage()).into(holder.ivCategoryImage);
+        } else {
+            Alerts.show(mContext, "There is no image");
+        }
         holder.tvCategroName.setText(vehicleData.getName());
     }
 
@@ -51,6 +61,7 @@ public class MainCategoryAdapter extends RecyclerView.Adapter<MainCategoryAdapte
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
+        private ImageView ivCategoryImage;
         private TextView tvCategroName;
         private LinearLayout llCategory;
         private View viewDevide;
@@ -58,10 +69,9 @@ public class MainCategoryAdapter extends RecyclerView.Adapter<MainCategoryAdapte
         public MyViewHolder(View view) {
             super(view);
 
+            ivCategoryImage = view.findViewById(R.id.ivCategoryImage);
             tvCategroName = view.findViewById(R.id.tvCategroName);
             llCategory = view.findViewById(R.id.llCategory);
-            viewDevide = view.findViewById(R.id.viewDevide);
-            viewDevide.setVisibility(View.GONE);
         }
     }
 
