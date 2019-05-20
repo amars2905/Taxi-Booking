@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">TexiBook</string>
+    <string name="app_name">Secure Cab</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="connection">Network error !!!</string>
     <string name="title_activity_home">HomeActivity</string>
@@ -10,4 +10,5 @@
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
     <string name="dummy_text">Simply dummy text of the printing and typetesting industry. Lorem ispum has been the industy standart dummy text ever since.</string>
+    <string name="title_activity_maps">Map</string>
 </resources>

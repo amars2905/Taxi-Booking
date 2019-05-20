@@ -127,11 +127,10 @@ public class VerifyOtpActivity extends BaseActivity implements View.OnClickListe
                 /*((EditText) findViewById(R.id.et_login_password)).setError("Please enter otp");*/
                 Toast.makeText(this, "Please enter otp", Toast.LENGTH_SHORT).show();
             } else {
-                RetrofitService.getOtpData(new Dialog(mContext), retrofitApiClient.otpApi(strMobile, strOtp), new WebResponse() {
+                RetrofitService.getOtpData(new Dialog(mContext), retrofitApiClient.otpApi(strMobile, strOtp, "1"), new WebResponse() {
                     @Override
                     public void onResponseSuccess(Response<?> result) {
                         OtpModel loginModel = (OtpModel) result.body();
-
                         if (loginModel.getStatus() == 1)
                         {
                                 Alerts.show(mContext, loginModel.getMessage());

@@ -29,7 +29,7 @@ public class SubCategoryAdapter extends RecyclerView.Adapter<SubCategoryAdapter.
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater li = LayoutInflater.from(mContext);
-        View itemView = li.inflate(R.layout.row_main_category, null);
+        View itemView = li.inflate(R.layout.row_main_category1, null);
         return new MyViewHolder(itemView);
     }
 
@@ -51,7 +51,7 @@ public class SubCategoryAdapter extends RecyclerView.Adapter<SubCategoryAdapter.
         public MyViewHolder(View view) {
             super(view);
 
-            tvCategroName = view.findViewById(R.id.tvCategroName);
+            tvCategroName = view.findViewById(R.id.tvCategroName1);
         }
     }
 

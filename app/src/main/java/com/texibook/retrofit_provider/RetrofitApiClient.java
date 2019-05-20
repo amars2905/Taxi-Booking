@@ -43,7 +43,8 @@ public interface RetrofitApiClient {
     @FormUrlEncoded
     @POST(Constant.OTP_API)
     Call<OtpModel> otpApi(@Field("mobileNumber") String mobileNumber,
-                          @Field("otp") String otp);
+                          @Field("otp") String otp,
+                          @Field("type") String type);
 
     @FormUrlEncoded
     @POST(Constant.LOGIN_API)

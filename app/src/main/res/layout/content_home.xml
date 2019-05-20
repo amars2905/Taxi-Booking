@@ -12,12 +12,34 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom">
 
-        <ImageView
+        <com.google.android.gms.maps.MapView
+            android:id="@+id/mapView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:adjustViewBounds="true"
-            android:scaleType="fitXY"
-            android:src="@drawable/map" />
+            android:layout_height="match_parent" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_margin="16dp">
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Drop from"
+                android:background="@drawable/bg_layout2"
+                android:padding="6dp"
+                android:textSize="16sp"
+                android:layout_margin="2dp"/>
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Drop to"
+                android:background="@drawable/bg_layout2"
+                android:padding="6dp"
+                android:textSize="16sp"
+                android:layout_margin="2dp"/>
+        </LinearLayout>
+
         <TextView
             android:layout_marginBottom="-16dp"
             android:visibility="gone"
