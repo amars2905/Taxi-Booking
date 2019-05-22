@@ -18,13 +18,13 @@ import android.view.MenuItem;
 
 import com.texibook.R;
 import com.texibook.constant.Constant;
+import com.texibook.ui.fragment.CoupanFragment;
 import com.texibook.ui.fragment.FeedBackFragment;
 import com.texibook.ui.fragment.HomeFragment;
 import com.texibook.ui.fragment.NotificationFragment;
 import com.texibook.ui.fragment.ProfileFragment;
 import com.texibook.ui.fragment.ReferNEarnFragment;
 import com.texibook.ui.fragment.RideHistoryFragment;
-import com.texibook.ui.fragment.YourRidesFragment;
 import com.texibook.utils.BaseActivity;
 import com.texibook.utils.FragmentUtils;
 
@@ -98,9 +98,9 @@ public class HomeActivity extends BaseActivity
         } else if (id == R.id.profile) {
             toolbar.setTitle(Constant.ProfileFragment);
             fragmentUtils.replaceFragment(new ProfileFragment(), Constant.ProfileFragment, R.id.frameLayout);
-        } else if (id == R.id.your_rides) {
-            toolbar.setTitle(Constant.YourRidesFragment);
-            fragmentUtils.replaceFragment(new YourRidesFragment(), Constant.YourRidesFragment, R.id.frameLayout);
+        } else if (id == R.id.coupan) {
+            toolbar.setTitle(Constant.Coupan);
+            fragmentUtils.replaceFragment(new CoupanFragment(), Constant.Coupan, R.id.frameLayout);
 
         } else if (id == R.id.free_rides) {
             toolbar.setTitle(Constant.ReferNEarnFragment);

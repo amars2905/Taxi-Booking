@@ -3,6 +3,8 @@ package com.texibook.retrofit_provider;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
+
 import retrofit2.Response;
 
 public class WebServiceResponse {
@@ -13,6 +15,8 @@ public class WebServiceResponse {
                 try {
                     webResponse.onResponseSuccess(response);
                 } catch (JSONException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
                     e.printStackTrace();
                 }
             } else {

@@ -3,6 +3,7 @@ package com.texibook.retrofit_provider;
 
 import com.texibook.constant.Constant;
 import com.texibook.model.address_add_responce.AddAddressModel;
+import com.texibook.model.coupan_modal.CoupanMainModal;
 import com.texibook.model.login_responce.LoginModel;
 import com.texibook.model.main_category_modal.TaxiMainCategoryModal;
 import com.texibook.model.order_responce.OrderModel;
@@ -25,6 +26,20 @@ import retrofit2.http.Part;
 public interface RetrofitApiClient {
     @GET(Constant.MAIN_CATEGORY_API)
     Call<TaxiMainCategoryModal> mainCategoryData();
+
+    @GET(Constant.COUPAN_API)
+    Call<CoupanMainModal> coupanData();
+
+    @Multipart
+    @POST(Constant.UPDATE_PROFILE)
+    Call<ResponseBody> updateProfile(@Part("userId") RequestBody userId,
+                                     @Part("firstName") RequestBody firstName,
+                                     @Part("lastName") RequestBody lastName,
+                                     @Part("email") RequestBody dob,
+                                     @Part("dob") RequestBody email,
+                                     @Part("gender") RequestBody gender,
+                                     @Part("address") RequestBody address,
+                                     @Part MultipartBody.Part profileImage);
 
     @FormUrlEncoded
     @POST(Constant.SUPPORT)
@@ -75,15 +90,6 @@ public interface RetrofitApiClient {
     @FormUrlEncoded
     @POST(Constant.PRODUCTS_DETAIL_API)
     Call<ProductDetailModel> getProductDetail(@Field("product_id") String product_id);
-
-
-    @Multipart
-    @POST(Constant.UPDATE_PROFILE)
-    Call<LoginModel> profileimage(@Part("user_id") RequestBody user_id,
-                                  @Part("user_gendar") RequestBody user_gendar,
-                                  @Part("user_name") RequestBody user_name,
-                                  @Part("user_dob") RequestBody user_dob,
-                                  @Part MultipartBody.Part user_profile_picture);
 
 
     @FormUrlEncoded

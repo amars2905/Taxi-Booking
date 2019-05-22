@@ -5,6 +5,9 @@ public class Constant {
     public static final String LOGIN_API = "/texi_booking/Api/login";
     public static final String OTP_API = "/texi_booking/Api/otpVerification";
     public static final String MAIN_CATEGORY_API = "/texi_booking/Api/vehicles";
+    public static final String UPDATE_PROFILE = "/texi_booking/Api/updateDetails";
+    public static final String COUPAN_API = "/texi_booking/Api/couponList";
+
     public static final String PRODUCTS_DETAIL_API = "api/select-product-details.php";
     public static final String GALLERY_API = "kls-api/gallery.php";
     public static final String CONTACT_US = "kls-api/contact.php";
@@ -15,7 +18,6 @@ public class Constant {
     public static final String FORGOT_PASSWORD_API = "api/user-forget-password.php";
     public static final String SUPPORT = "api/app_token.php";
     public static final String PROFILE = "api/user-profile.php";
-    public static final String UPDATE_PROFILE = "api/user-profile-update.php";
     public static final String ADD_ADDRESS = "api/add-user-address.php";
     public static final String GET_ADDRESS = "api/user-address.php";
     public static final String GET_ORDER_HISTORY = "api/select-order.php";
@@ -23,7 +25,7 @@ public class Constant {
 
 
     //main categery image url
-    public static final String IMAGE_URL = "http://kumarlifesciences.com/img/category/";
+    public static final String IMAGE_URL = "http://damodarvanshiya.com/texi_booking/images/";
 
     //constant values
     public static final String LoginFragment = "Login";
@@ -74,7 +76,7 @@ public class Constant {
     public static final String ProfileFragment = "Profile";
     public static final String FeedBackFragment = "Feedback";
     public static final String RideHistoryFragment = "Ride History";
-    public static final String YourRidesFragment = "Your Rides";
+    public static final String Coupan = "Coupan";
     public static final String NotificationFragment = "Notification";
     public static final String ReferNEarnFragment = "Refer and Earn";
 }

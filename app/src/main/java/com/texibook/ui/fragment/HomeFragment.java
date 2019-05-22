@@ -6,6 +6,7 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetBehavior;
@@ -15,12 +16,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.LinearLayout;
-import android.widget.ListView;
+
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,8 +35,6 @@ import com.texibook.R;
 import com.texibook.adapters.MainCategoryAdapter;
 import com.texibook.adapters.RideHistoryAdapter;
 import com.texibook.adapters.SubCategoryAdapter;
-import com.texibook.constant.Constant;
-import com.texibook.model.User;
 import com.texibook.model.main_category_modal.Subcategory;
 import com.texibook.model.main_category_modal.TaxiMainCategoryModal;
 import com.texibook.model.main_category_modal.Vehicle;
@@ -50,27 +44,32 @@ import com.texibook.retrofit_provider.WebResponse;
 import com.texibook.ui.Activity.HomeActivity;
 import com.texibook.utils.Alerts;
 import com.texibook.utils.AppPreference;
+import com.texibook.utils.AppProgressDialog;
 import com.texibook.utils.BaseFragment;
 import com.texibook.utils.ConnectionDirector;
+import com.texibook.utils.GpsTracker;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Response;
 
-public class HomeFragment extends BaseFragment implements View.OnClickListener {
+public class HomeFragment extends BaseFragment implements View.OnClickListener, OnMapReadyCallback {
     private View rootView;
     private ConnectionDirector cd;
     private List<Vehicle> categoryList = new ArrayList<>();
     private List<Subcategory> subCategoryList = new ArrayList<>();
     private MainCategoryAdapter categoryAdapter;
     private SubCategoryAdapter subCategoryAdapter;
-    LinearLayout layoutBottomSheet;
     private BottomSheetBehavior sheetBehavior;
     private TaxiMainCategoryModal mainCategoryModal;
     MapView mMapView;
-    private GoogleMap googleMap;
+    private GoogleMap mMap;
+    private RecyclerView rvCategory, rvSubcategory;
 
+    private double latitude = 0.0;
+    private double longitude = 0.0;
+    private Dialog dialog, dialogPaid;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -80,51 +79,16 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
         cd = new ConnectionDirector(mContext);
         retrofitApiClient = RetrofitService.getRetrofit();
         categoryApi();
-        mMapView = (MapView) rootView.findViewById(R.id.mapView);
-        mMapView.onCreate(savedInstanceState);
 
-        mMapView.onResume(); // needed to get the map to display immediately
+        SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
 
-        try {
-            MapsInitializer.initialize(getActivity().getApplicationContext());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        mMapView.getMapAsync(new OnMapReadyCallback() {
-            @Override
-            public void onMapReady(GoogleMap mMap) {
-                googleMap = mMap;
-
-                // For showing a move to my location button
-                if (ActivityCompat.checkSelfPermission(mContext, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(mContext, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                    // TODO: Consider calling
-                    //    ActivityCompat#requestPermissions
-                    // here to request the missing permissions, and then overriding
-                    //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                    //                                          int[] grantResults)
-                    // to handle the case where the user grants the permission. See the documentation
-                    // for ActivityCompat#requestPermissions for more details.
-                    return;
-                }
-                googleMap.setMyLocationEnabled(true);
-
-                // For dropping a marker at a point on the Map
-                LatLng sydney = new LatLng(-34, 151);
-                googleMap.addMarker(new MarkerOptions().position(sydney).title("Marker Title").snippet("Marker Description"));
-
-                // For zooming automatically to the location of the marker
-                CameraPosition cameraPosition = new CameraPosition.Builder().target(sydney).zoom(12).build();
-                googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
-            }
-        });
-
+        mapFragment.getMapAsync(this);
         init();
         return rootView;
     }
 
     private void init() {
-       /* View layoutBottomSheet = (View) rootView.findViewById(R.id.nestedScrollView);
+        View layoutBottomSheet = (View) rootView.findViewById(R.id.bottom_sheet);
         sheetBehavior = BottomSheetBehavior.from(layoutBottomSheet);
         sheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
             @Override
@@ -147,10 +111,10 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
             public void onSlide(@NonNull View view, float v) {
 
             }
-        });*/
+        });
 
-        RecyclerView rvCategory = rootView.findViewById(R.id.rvCategory);
-        RecyclerView rvSubcategory = rootView.findViewById(R.id.rvSubcategory);
+        rvCategory = rootView.findViewById(R.id.rvCategory);
+        rvSubcategory = rootView.findViewById(R.id.rvSubcategory);
         rvCategory.setHasFixedSize(true);
 
         rvCategory.setLayoutManager(new LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false));
@@ -186,6 +150,19 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
                 int pos = (int) view.getTag();
                 subCategoryList.addAll(mainCategoryModal.getVehicle().get(pos).getSubcategory());
                 subCategoryAdapter.notifyDataSetChanged();
+                break;
+            case R.id.llSubCategory:
+                if (sheetBehavior.getState() != BottomSheetBehavior.STATE_EXPANDED) {
+                    sheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+                } else {
+                    ((TextView) rootView.findViewById(R.id.tvCategoryName)).setVisibility(View.VISIBLE);
+                    sheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                    rvSubcategory.setVisibility(View.VISIBLE);
+                    rvCategory.setVisibility(View.VISIBLE);
+                }
+                rvSubcategory.setVisibility(View.GONE);
+                rvCategory.setVisibility(View.GONE);
+                ((TextView) rootView.findViewById(R.id.tvCategoryName)).setVisibility(View.GONE);
                 break;
         }
     }
@@ -224,21 +201,37 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
 
 
 
-    @Override
-    public void onPause() {
-        super.onPause();
-        mMapView.onPause();
-    }
+
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
-        mMapView.onDestroy();
+    public void onMapReady(GoogleMap googleMap) {
+        mMap = googleMap;
+
+        // Add a marker in Sydney and move the camera
+        LatLng sydney = new LatLng(latitude, longitude);
+        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
     }
 
-    @Override
-    public void onLowMemory() {
-        super.onLowMemory();
-        mMapView.onLowMemory();
+    private void getLatLong() {
+        GpsTracker gpsTracker = new GpsTracker(mContext);
+        latitude = gpsTracker.getLatitude();
+        longitude = gpsTracker.getLongitude();
+        refreshLocation();
+    }
+
+    private void refreshLocation() {
+        AppProgressDialog.show(dialog);
+        if (latitude == 0) {
+            AppProgressDialog.show(dialog);
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    getLatLong();
+                }
+            }, 3000);
+        } else {
+            //deliveryJobApi();
+        }
     }
 }

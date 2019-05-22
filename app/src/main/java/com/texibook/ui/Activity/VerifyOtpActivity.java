@@ -46,9 +46,10 @@ public class VerifyOtpActivity extends BaseActivity implements View.OnClickListe
     private TextView otpTime, tvChangeMobile, btnResend;
     private LinearLayout resendLayout;
     private Pinview pinview1;
-    private String strMobile , strOtp, strUserProfile;
-   // private SMSReceiver smsReceiver;
+    private String strMobile, strOtp, strUserProfile;
+    // private SMSReceiver smsReceiver;
     public static final String TAG = "VerifyOtpActivity";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,15 +60,15 @@ public class VerifyOtpActivity extends BaseActivity implements View.OnClickListe
 
         initViews();
 
-     //   startSMSListener();
+        //   startSMSListener();
     }
 
     private void initViews() {
-        ((Button)findViewById(R.id.btn_fplogin)).setOnClickListener(this);
+        ((Button) findViewById(R.id.btn_fplogin)).setOnClickListener(this);
         btn_fplogin = findViewById(R.id.btn_fplogin);
         pinview1 = findViewById(R.id.pinview1);
         tvChangeMobile = findViewById(R.id.tvChangeMobile);
-        otpTime = (TextView)findViewById(R.id.otpTime);
+        otpTime = (TextView) findViewById(R.id.otpTime);
         resendLayout = (LinearLayout) findViewById(R.id.resendLayout);
         btn_fplogin.setOnClickListener(this);
         tvChangeMobile.setOnClickListener(this);
@@ -78,7 +79,7 @@ public class VerifyOtpActivity extends BaseActivity implements View.OnClickListe
         otpTime();
     }
 
-    private void startFragment(String tag, Fragment fragment){
+    private void startFragment(String tag, Fragment fragment) {
         loginfragmentManager
                 .beginTransaction()
                 .setCustomAnimations(R.anim.left_enter, R.anim.right_out)
@@ -102,9 +103,9 @@ public class VerifyOtpActivity extends BaseActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.btn_fplogin:
-                otpApi();
+              otpApi();
                 //startFragment(Constant.SignUpFragment,new SignUpFragment());
                 break;
             case R.id.tvChangeMobile:
@@ -112,7 +113,7 @@ public class VerifyOtpActivity extends BaseActivity implements View.OnClickListe
                 finish();
                 break;
 
-            case R.id.btnResend :
+            case R.id.btnResend:
                 resendApi();
                 otpTime();
                 break;
@@ -131,32 +132,30 @@ public class VerifyOtpActivity extends BaseActivity implements View.OnClickListe
                     @Override
                     public void onResponseSuccess(Response<?> result) {
                         OtpModel loginModel = (OtpModel) result.body();
-                        if (loginModel.getStatus() == 1)
-                        {
-                                Alerts.show(mContext, loginModel.getMessage());
-                                AppPreference.setBooleanPreference(mContext, Constant.Is_Login, true);
-                                AppPreference.setStringPreference(mContext, Constant.User_Id, loginModel.getData().getUserId());
+                        if (loginModel.getStatus() == 1) {
+                            Alerts.show(mContext, loginModel.getMessage());
+                            AppPreference.setBooleanPreference(mContext, Constant.Is_Login, true);
+                            AppPreference.setStringPreference(mContext, Constant.User_Id, loginModel.getData().getUserId());
+                            AppPreference.setStringPreference(mContext, Constant.MobileNumber, strMobile);
+                            Gson gson = new GsonBuilder().setLenient().create();
+                            String data = gson.toJson(loginModel);
+                            AppPreference.setStringPreference(mContext, Constant.User_Data, data);
+                            User.setUser(loginModel);
 
-                                Gson gson = new GsonBuilder().setLenient().create();
-                                String data = gson.toJson(loginModel);
-                                AppPreference.setStringPreference(mContext, Constant.User_Data, data);
-                                User.setUser(loginModel);
+                            if (loginModel.getLoginStatus().equals("1")) {
+                                Intent intent = new Intent(mContext, HomeActivity.class);
+                                // intent.putExtra("Mobile_Number", strMobile);
+                                mContext.startActivity(intent);
+                                finish();
+                            } else {
+                                Alerts.show(mContext, "New User");
+                                Intent intent = new Intent(mContext, ProfileActivity.class);
+                                // intent.putExtra("Mobile_Number", strMobile);
+                                mContext.startActivity(intent);
+                                finish();
+                            }
 
-                                if (loginModel.getLoginStatus().equals("1"))
-                                {
-                                    Intent intent = new Intent(mContext, HomeActivity.class);
-                                   // intent.putExtra("Mobile_Number", strMobile);
-                                    mContext.startActivity(intent);
-                                    finish();
-                                }else {
-                                    Alerts.show(mContext, "New User");
-                                    Intent intent = new Intent(mContext, HomeActivity.class);
-                                    // intent.putExtra("Mobile_Number", strMobile);
-                                    mContext.startActivity(intent);
-                                    finish();
-                                }
-
-                        }else {
+                        } else {
                             Alerts.show(mContext, loginModel.getMessage());
                         }
                     }
@@ -167,14 +166,13 @@ public class VerifyOtpActivity extends BaseActivity implements View.OnClickListe
                     }
                 });
             }
-        }else {
+        } else {
             cd.show(mContext);
         }
     }
 
 
-    private void resendApi()
-    {
+    private void resendApi() {
         RetrofitService.getLoginData(new Dialog(mContext), retrofitApiClient.loginData(strMobile), new WebResponse() {
             @Override
             public void onResponseSuccess(Response<?> result) {
@@ -262,5 +260,5 @@ public class VerifyOtpActivity extends BaseActivity implements View.OnClickListe
         pinview1.setValue(numberOnly);
        // Toast.makeText(this, numberOnly, Toast.LENGTH_SHORT).show();
     }*/
-    
+
 }

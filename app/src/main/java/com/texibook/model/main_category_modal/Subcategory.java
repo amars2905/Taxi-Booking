@@ -9,99 +9,112 @@ import com.google.gson.annotations.SerializedName;
 public class Subcategory implements Parcelable
 {
 
-@SerializedName("subcategory_id")
-@Expose
-private String subcategoryId;
-@SerializedName("category_id")
-@Expose
-private String categoryId;
-@SerializedName("name")
-@Expose
-private String name;
-@SerializedName("status")
-@Expose
-private String status;
-@SerializedName("created")
-@Expose
-private String created;
-public final static Parcelable.Creator<Subcategory> CREATOR = new Creator<Subcategory>() {
+    @SerializedName("subcategory_id")
+    @Expose
+    private String subcategoryId;
+    @SerializedName("category_id")
+    @Expose
+    private String categoryId;
+    @SerializedName("name")
+    @Expose
+    private String name;
+    @SerializedName("image")
+    @Expose
+    private String image;
+    @SerializedName("status")
+    @Expose
+    private String status;
+    @SerializedName("created")
+    @Expose
+    private String created;
+    public final static Parcelable.Creator<Subcategory> CREATOR = new Creator<Subcategory>() {
 
 
-@SuppressWarnings({
-"unchecked"
-})
-public Subcategory createFromParcel(Parcel in) {
-return new Subcategory(in);
-}
+        @SuppressWarnings({
+                "unchecked"
+        })
+        public Subcategory createFromParcel(Parcel in) {
+            return new Subcategory(in);
+        }
 
-public Subcategory[] newArray(int size) {
-return (new Subcategory[size]);
-}
+        public Subcategory[] newArray(int size) {
+            return (new Subcategory[size]);
+        }
 
-}
-;
+    }
+            ;
 
-protected Subcategory(Parcel in) {
-this.subcategoryId = ((String) in.readValue((String.class.getClassLoader())));
-this.categoryId = ((String) in.readValue((String.class.getClassLoader())));
-this.name = ((String) in.readValue((String.class.getClassLoader())));
-this.status = ((String) in.readValue((String.class.getClassLoader())));
-this.created = ((String) in.readValue((String.class.getClassLoader())));
-}
+    protected Subcategory(Parcel in) {
+        this.subcategoryId = ((String) in.readValue((String.class.getClassLoader())));
+        this.categoryId = ((String) in.readValue((String.class.getClassLoader())));
+        this.name = ((String) in.readValue((String.class.getClassLoader())));
+        this.image = ((String) in.readValue((String.class.getClassLoader())));
+        this.status = ((String) in.readValue((String.class.getClassLoader())));
+        this.created = ((String) in.readValue((String.class.getClassLoader())));
+    }
 
-public Subcategory() {
-}
+    public Subcategory() {
+    }
 
-public String getSubcategoryId() {
-return subcategoryId;
-}
+    public String getSubcategoryId() {
+        return subcategoryId;
+    }
 
-public void setSubcategoryId(String subcategoryId) {
-this.subcategoryId = subcategoryId;
-}
+    public void setSubcategoryId(String subcategoryId) {
+        this.subcategoryId = subcategoryId;
+    }
 
-public String getCategoryId() {
-return categoryId;
-}
+    public String getCategoryId() {
+        return categoryId;
+    }
 
-public void setCategoryId(String categoryId) {
-this.categoryId = categoryId;
-}
+    public void setCategoryId(String categoryId) {
+        this.categoryId = categoryId;
+    }
 
-public String getName() {
-return name;
-}
+    public String getName() {
+        return name;
+    }
 
-public void setName(String name) {
-this.name = name;
-}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-public String getStatus() {
-return status;
-}
+    public String getImage() {
+        return image;
+    }
 
-public void setStatus(String status) {
-this.status = status;
-}
+    public void setImage(String image) {
+        this.image = image;
+    }
 
-public String getCreated() {
-return created;
-}
+    public String getStatus() {
+        return status;
+    }
 
-public void setCreated(String created) {
-this.created = created;
-}
+    public void setStatus(String status) {
+        this.status = status;
+    }
 
-public void writeToParcel(Parcel dest, int flags) {
-dest.writeValue(subcategoryId);
-dest.writeValue(categoryId);
-dest.writeValue(name);
-dest.writeValue(status);
-dest.writeValue(created);
-}
+    public String getCreated() {
+        return created;
+    }
 
-public int describeContents() {
-return 0;
-}
+    public void setCreated(String created) {
+        this.created = created;
+    }
+
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeValue(subcategoryId);
+        dest.writeValue(categoryId);
+        dest.writeValue(name);
+        dest.writeValue(image);
+        dest.writeValue(status);
+        dest.writeValue(created);
+    }
+
+    public int describeContents() {
+        return 0;
+    }
 
 }

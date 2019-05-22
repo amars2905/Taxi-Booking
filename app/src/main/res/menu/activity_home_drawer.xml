@@ -13,9 +13,9 @@
             android:icon="@drawable/ic_menu_gallery"
             android:title="Profile" />
         <item
-            android:id="@+id/your_rides"
+            android:id="@+id/coupan"
             android:icon="@drawable/ic_menu_slideshow"
-            android:title="Your rides" />
+            android:title="Coupan" />
         <item
             android:id="@+id/free_rides"
             android:icon="@drawable/ic_menu_manage"

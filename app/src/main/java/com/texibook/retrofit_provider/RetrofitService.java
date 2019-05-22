@@ -4,11 +4,13 @@ import android.app.Dialog;
 
 
 import com.texibook.constant.Constant;
+import com.texibook.model.coupan_modal.CoupanMainModal;
 import com.texibook.model.login_responce.LoginModel;
 import com.texibook.model.main_category_modal.TaxiMainCategoryModal;
 import com.texibook.model.otp_responce.OtpModel;
 import com.texibook.utils.AppProgressDialog;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -43,6 +45,29 @@ public class RetrofitService {
             new RetrofitService();
         return client;
     }
+
+    public static void getResponce(final Dialog dialog, final Call<ResponseBody> method, final WebResponse webResponse) {
+        if (dialog != null)
+            AppProgressDialog.show(dialog);
+
+        method.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (dialog != null)
+                    AppProgressDialog.hide(dialog);
+                WebServiceResponse.handleResponse(response, webResponse);
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable throwable) {
+                if (dialog != null)
+                    AppProgressDialog.hide(dialog);
+                webResponse.onResponseFailed(throwable.getMessage());
+            }
+        });
+
+    }
+
     public static void getCategoryData(final Dialog dialog, final Call<TaxiMainCategoryModal> method, final WebResponse webResponse) {
         if (dialog != null)
             AppProgressDialog.show(dialog);
@@ -57,6 +82,28 @@ public class RetrofitService {
 
             @Override
             public void onFailure(Call<TaxiMainCategoryModal> call, Throwable throwable) {
+                if (dialog != null)
+                    AppProgressDialog.hide(dialog);
+                webResponse.onResponseFailed(throwable.getMessage());
+            }
+        });
+
+    }
+
+    public static void getCoupanData(final Dialog dialog, final Call<CoupanMainModal> method, final WebResponse webResponse) {
+        if (dialog != null)
+            AppProgressDialog.show(dialog);
+
+        method.enqueue(new Callback<CoupanMainModal>() {
+            @Override
+            public void onResponse(Call<CoupanMainModal> call, Response<CoupanMainModal> response) {
+                if (dialog != null)
+                    AppProgressDialog.hide(dialog);
+                WebServiceResponse.handleResponse(response, webResponse);
+            }
+
+            @Override
+            public void onFailure(Call<CoupanMainModal> call, Throwable throwable) {
                 if (dialog != null)
                     AppProgressDialog.hide(dialog);
                 webResponse.onResponseFailed(throwable.getMessage());
@@ -87,27 +134,27 @@ public class RetrofitService {
         });
 
     }
-        public static void getOtpData(final Dialog dialog, final Call<OtpModel> method, final WebResponse webResponse) {
-            if (dialog != null)
-                AppProgressDialog.show(dialog);
 
-            method.enqueue(new Callback<OtpModel>() {
-                @Override
-                public void onResponse(Call<OtpModel> call, Response<OtpModel> response) {
-                    if (dialog != null)
-                        AppProgressDialog.hide(dialog);
-                    WebServiceResponse.handleResponse(response, webResponse);
-                }
+    public static void getOtpData(final Dialog dialog, final Call<OtpModel> method, final WebResponse webResponse) {
+        if (dialog != null)
+            AppProgressDialog.show(dialog);
 
-                @Override
-                public void onFailure(Call<OtpModel> call, Throwable throwable) {
-                    if (dialog != null)
-                        AppProgressDialog.hide(dialog);
-                    webResponse.onResponseFailed(throwable.getMessage());
-                }
-            });
+        method.enqueue(new Callback<OtpModel>() {
+            @Override
+            public void onResponse(Call<OtpModel> call, Response<OtpModel> response) {
+                if (dialog != null)
+                    AppProgressDialog.hide(dialog);
+                WebServiceResponse.handleResponse(response, webResponse);
+            }
+
+            @Override
+            public void onFailure(Call<OtpModel> call, Throwable throwable) {
+                if (dialog != null)
+                    AppProgressDialog.hide(dialog);
+                webResponse.onResponseFailed(throwable.getMessage());
+            }
+        });
     }
-
 
 
 }
