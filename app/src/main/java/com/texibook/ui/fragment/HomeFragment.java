@@ -72,12 +72,21 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
             public void onStateChanged(@NonNull View view, int i) {
                 switch (i) {
                     case BottomSheetBehavior.STATE_HIDDEN:
+                        ((TextView) rootView.findViewById(R.id.tvCategoryName)).setVisibility(View.VISIBLE);
+                        rvSubcategory.setVisibility(View.VISIBLE);
+                        rvCategory.setVisibility(View.VISIBLE);
                         break;
                     case BottomSheetBehavior.STATE_EXPANDED:
                         break;
                     case BottomSheetBehavior.STATE_COLLAPSED:
+                        ((TextView) rootView.findViewById(R.id.tvCategoryName)).setVisibility(View.VISIBLE);
+                        rvSubcategory.setVisibility(View.VISIBLE);
+                        rvCategory.setVisibility(View.VISIBLE);
                         break;
                     case BottomSheetBehavior.STATE_DRAGGING:
+                        ((TextView) rootView.findViewById(R.id.tvCategoryName)).setVisibility(View.VISIBLE);
+                        rvSubcategory.setVisibility(View.VISIBLE);
+                        rvCategory.setVisibility(View.VISIBLE);
                         break;
                     case BottomSheetBehavior.STATE_SETTLING:
                         break;
@@ -131,15 +140,16 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
             case R.id.llSubCategory:
                 if (sheetBehavior.getState() != BottomSheetBehavior.STATE_EXPANDED) {
                     sheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+                    rvSubcategory.setVisibility(View.GONE);
+                    rvCategory.setVisibility(View.GONE);
+                    ((TextView) rootView.findViewById(R.id.tvCategoryName)).setVisibility(View.GONE);
                 } else {
                     ((TextView) rootView.findViewById(R.id.tvCategoryName)).setVisibility(View.VISIBLE);
                     sheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
                     rvSubcategory.setVisibility(View.VISIBLE);
                     rvCategory.setVisibility(View.VISIBLE);
                 }
-                rvSubcategory.setVisibility(View.GONE);
-                rvCategory.setVisibility(View.GONE);
-                ((TextView) rootView.findViewById(R.id.tvCategoryName)).setVisibility(View.GONE);
+
                 break;
         }
     }
