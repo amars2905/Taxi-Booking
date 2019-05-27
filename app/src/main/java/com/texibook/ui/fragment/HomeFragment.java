@@ -5,6 +5,8 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
@@ -17,6 +19,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -49,8 +52,10 @@ import com.texibook.utils.BaseFragment;
 import com.texibook.utils.ConnectionDirector;
 import com.texibook.utils.GpsTracker;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import retrofit2.Response;
 
@@ -70,6 +75,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
     private double latitude = 0.0;
     private double longitude = 0.0;
     private Dialog dialog, dialogPaid;
+    private Button btnConfirm;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -95,12 +101,21 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
             public void onStateChanged(@NonNull View view, int i) {
                 switch (i) {
                     case BottomSheetBehavior.STATE_HIDDEN:
+                        ((TextView) rootView.findViewById(R.id.tvCategoryName)).setVisibility(View.VISIBLE);
+                        rvSubcategory.setVisibility(View.VISIBLE);
+                        rvCategory.setVisibility(View.VISIBLE);
                         break;
                     case BottomSheetBehavior.STATE_EXPANDED:
                         break;
                     case BottomSheetBehavior.STATE_COLLAPSED:
+                        ((TextView) rootView.findViewById(R.id.tvCategoryName)).setVisibility(View.VISIBLE);
+                        rvSubcategory.setVisibility(View.VISIBLE);
+                        rvCategory.setVisibility(View.VISIBLE);
                         break;
                     case BottomSheetBehavior.STATE_DRAGGING:
+                        ((TextView) rootView.findViewById(R.id.tvCategoryName)).setVisibility(View.VISIBLE);
+                        rvSubcategory.setVisibility(View.VISIBLE);
+                        rvCategory.setVisibility(View.VISIBLE);
                         break;
                     case BottomSheetBehavior.STATE_SETTLING:
                         break;
@@ -113,6 +128,8 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
             }
         });
 
+        btnConfirm = rootView.findViewById(R.id.btnConfirm);
+        btnConfirm.setOnClickListener(this);
         rvCategory = rootView.findViewById(R.id.rvCategory);
         rvSubcategory = rootView.findViewById(R.id.rvSubcategory);
         rvCategory.setHasFixedSize(true);
@@ -154,15 +171,20 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
             case R.id.llSubCategory:
                 if (sheetBehavior.getState() != BottomSheetBehavior.STATE_EXPANDED) {
                     sheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+                    rvSubcategory.setVisibility(View.GONE);
+                    rvCategory.setVisibility(View.GONE);
+                    ((TextView) rootView.findViewById(R.id.tvCategoryName)).setVisibility(View.GONE);
                 } else {
                     ((TextView) rootView.findViewById(R.id.tvCategoryName)).setVisibility(View.VISIBLE);
                     sheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
                     rvSubcategory.setVisibility(View.VISIBLE);
                     rvCategory.setVisibility(View.VISIBLE);
                 }
-                rvSubcategory.setVisibility(View.GONE);
-                rvCategory.setVisibility(View.GONE);
-                ((TextView) rootView.findViewById(R.id.tvCategoryName)).setVisibility(View.GONE);
+
+                break;
+
+            case R.id.btnConfirm :
+
                 break;
         }
     }
