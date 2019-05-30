@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="#efefef">
     <include layout="@layout/content_main" />
-    <include layout="@layout/bottom_sheet_driver_detail" />
+    <include layout="@layout/confirm_ride_bottom_seet" />
 
     <!-- Adding bottom sheet after main content -->
 

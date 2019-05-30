@@ -66,7 +66,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
     private List<Subcategory> subCategoryList = new ArrayList<>();
     private MainCategoryAdapter categoryAdapter;
     private SubCategoryAdapter subCategoryAdapter;
-    private BottomSheetBehavior sheetBehavior;
+    private BottomSheetBehavior sheetBehavior, sheetBehavior1;
     private TaxiMainCategoryModal mainCategoryModal;
     MapView mMapView;
     private GoogleMap mMap;
@@ -94,7 +94,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
     }
 
     private void init() {
-        View layoutBottomSheet = (View) rootView.findViewById(R.id.bottom_sheet);
+        View layoutBottomSheet = (View) rootView.findViewById(R.id.bottom_sheet2);
         sheetBehavior = BottomSheetBehavior.from(layoutBottomSheet);
         sheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
             @Override
@@ -127,6 +127,41 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
 
             }
         });
+
+       /* View layoutBottomSheet1 = (View) rootView.findViewById(R.id.bottom_driver);
+        sheetBehavior = BottomSheetBehavior.from(layoutBottomSheet1);
+        sheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
+            @Override
+            public void onStateChanged(@NonNull View view, int i) {
+                switch (i) {
+                    case BottomSheetBehavior.STATE_HIDDEN:
+                        ((TextView) rootView.findViewById(R.id.tvCategoryName)).setVisibility(View.VISIBLE);
+                        rvSubcategory.setVisibility(View.VISIBLE);
+                        rvCategory.setVisibility(View.VISIBLE);
+                        break;
+                    case BottomSheetBehavior.STATE_EXPANDED:
+                        break;
+                    case BottomSheetBehavior.STATE_COLLAPSED:
+                        ((TextView) rootView.findViewById(R.id.tvCategoryName)).setVisibility(View.VISIBLE);
+                        rvSubcategory.setVisibility(View.VISIBLE);
+                        rvCategory.setVisibility(View.VISIBLE);
+                        break;
+                    case BottomSheetBehavior.STATE_DRAGGING:
+                        ((TextView) rootView.findViewById(R.id.tvCategoryName)).setVisibility(View.VISIBLE);
+                        rvSubcategory.setVisibility(View.VISIBLE);
+                        rvCategory.setVisibility(View.VISIBLE);
+                        break;
+                    case BottomSheetBehavior.STATE_SETTLING:
+                        break;
+                }
+            }
+
+            @Override
+            public void onSlide(@NonNull View view, float v) {
+
+            }
+        });*/
+
 
         btnConfirm = rootView.findViewById(R.id.btnConfirm);
         btnConfirm.setOnClickListener(this);
